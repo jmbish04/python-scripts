@@ -17,7 +17,7 @@ This repository provides a curses-based CLI that guides users through extracting
 1. Install dependencies and Wrangler:
    ```bash
    npm install
-   npm install -g wrangler
+   npm install --save-dev wrangler
    ```
 2. Develop locally:
    ```bash
