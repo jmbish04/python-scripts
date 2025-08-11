@@ -33,7 +33,7 @@ def prompt(stdscr, text):
 
 def run(stdscr):
     # Input source selection
-    src_idx = menu(stdscr, "Select input source", ["R2 Bucket", "Local File", "Website URL"])
+    src_idx = menu(stdscr, "Select input source", ["R2 Bucket", "Local File", "Website URL", "Website URL (Browser Render)"])
     if src_idx == 0:
         bucket = prompt(stdscr, "R2 bucket name:")
         key = prompt(stdscr, "Object key:")
@@ -43,9 +43,12 @@ def run(stdscr):
         with open(path, "rb") as f:
             content = base64.b64encode(f.read()).decode()
         input_data = {"type": "local", "filename": os.path.basename(path), "content": content}
-    else:
+    elif src_idx == 2:
         url = prompt(stdscr, "Website URL:")
         input_data = {"type": "url", "url": url}
+    else:
+        url = prompt(stdscr, "Website URL:")
+        input_data = {"type": "url", "url": url, "browser": True}
 
     # Processing options
     emb_idx = menu(stdscr, "Generate embeddings?", ["No", "Yes"])
@@ -61,7 +64,7 @@ def run(stdscr):
     bucket_out = prompt(stdscr, "Destination R2 bucket:")
     key_out = prompt(stdscr, "Output key prefix:")
     local_idx = menu(stdscr, "Also export to current path?", ["No", "Yes"])
-    worker_url = prompt(stdscr, "Worker URL (e.g., http://localhost:8787/process):")
+    worker_url = "https://ask-my-doc.hacolby.workers.dev/"
 
     payload = {
         "input": input_data,
