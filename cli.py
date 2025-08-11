@@ -74,7 +74,7 @@ def run(stdscr):
     stdscr.refresh()
     try:
         res = requests.post(worker_url, json=payload, timeout=60)
-    except Exception as exc:
+    except requests.exceptions.RequestException as exc:
         stdscr.clear()
         stdscr.addstr(0, 0, f"Request failed: {exc}")
         stdscr.getch()
